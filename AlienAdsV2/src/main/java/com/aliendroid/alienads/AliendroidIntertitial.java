@@ -175,7 +175,53 @@ public class AliendroidIntertitial {
                 break;
             case "FACEBOOK":
                 FBinterstitialAd = new com.facebook.ads.InterstitialAd(activity, idIntertitialBackup);
-                FBinterstitialAd.loadAd();
+               InterstitialAdListener interstitialAdListener = new InterstitialAdListener() {
+            @Override
+            public void onInterstitialDisplayed(com.facebook.ads.Ad ad) {
+                if (onLoadInterstitialFacebook != null) {
+                    onLoadInterstitialFacebook.onInterstitialDisplayed();
+                }
+            }
+
+            @Override
+            public void onInterstitialDismissed(com.facebook.ads.Ad ad) {
+                if (onLoadInterstitialFacebook != null) {
+                    onLoadInterstitialFacebook.onInterstitialDismissed();
+                }
+            }
+
+            @Override
+            public void onError(com.facebook.ads.Ad ad, AdError adError) {
+                if (onLoadInterstitialFacebook != null) {
+                    onLoadInterstitialFacebook.onError();
+                }
+            }
+
+            @Override
+            public void onAdLoaded(com.facebook.ads.Ad ad) {
+                if (onLoadInterstitialFacebook != null) {
+                    onLoadInterstitialFacebook.onAdLoaded();
+                }
+            }
+
+            @Override
+            public void onAdClicked(com.facebook.ads.Ad ad) {
+                if (onLoadInterstitialFacebook != null) {
+                    onLoadInterstitialFacebook.onAdClicked();
+                }
+            }
+
+            @Override
+            public void onLoggingImpression(com.facebook.ads.Ad ad) {
+                if (onLoadInterstitialFacebook != null) {
+                    onLoadInterstitialFacebook.onLoggingImpression();
+                }
+            }
+        };
+        FBinterstitialAd.loadAd(
+                FBinterstitialAd.buildLoadAdConfig()
+                        .withAdListener(interstitialAdListener)
+                        .build());
                 break;
             case "ALIEN-V":
                 AlienViewAds.Interstitial(activity, idIntertitialBackup);
